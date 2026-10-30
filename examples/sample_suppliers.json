@@ -1,0 +1,6 @@
+[
+  {"supplierId": "SUP-001", "name": "Nordic Cloud Software", "countryRiskIndex": 8, "category": "software", "saqScore": 92, "adverseMediaCount": 0},
+  {"supplierId": "SUP-002", "name": "Baltic Freight", "countryRiskIndex": 25, "category": "logistics", "saqScore": 70, "adverseMediaCount": 1},
+  {"supplierId": "SUP-003", "name": "Delta Textile Mills", "countryRiskIndex": 78, "category": "textiles", "saqScore": 45, "adverseMediaCount": 2},
+  {"supplierId": "SUP-004", "name": "Andes Mineral Trading", "countryRiskIndex": 72, "category": "raw materials", "saqScore": null, "adverseMediaCount": 4}
+]

@@ -1,0 +1,16 @@
+{
+  "name": "Supplier onboarding: score and route",
+  "nodes": [
+    {"parameters": {"httpMethod": "POST", "path": "new-supplier"}, "name": "New supplier (CRM webhook)", "type": "n8n-nodes-base.webhook", "typeVersion": 2, "position": [0, 0]},
+    {"parameters": {"includeBreakdown": true}, "name": "Supplier Risk Score", "type": "n8n-nodes-supplier-risk.supplierRisk", "typeVersion": 1, "position": [220, 0]},
+    {"parameters": {"dataType": "string", "value1": "={{ $json.risk.route }}", "rules": {"rules": [{"value2": "auto-approve"}, {"value2": "category-manager", "output": 1}, {"value2": "compliance-committee", "output": 2}]}}, "name": "Route by band", "type": "n8n-nodes-base.switch", "typeVersion": 1, "position": [440, 0]},
+    {"parameters": {}, "name": "Set status Active in CRM", "type": "n8n-nodes-base.noOp", "typeVersion": 1, "position": [660, -150]},
+    {"parameters": {}, "name": "Approval task for Category Manager", "type": "n8n-nodes-base.noOp", "typeVersion": 1, "position": [660, 0]},
+    {"parameters": {}, "name": "Open Compliance Committee case", "type": "n8n-nodes-base.noOp", "typeVersion": 1, "position": [660, 150]}
+  ],
+  "connections": {
+    "New supplier (CRM webhook)": {"main": [[{"node": "Supplier Risk Score", "type": "main", "index": 0}]]},
+    "Supplier Risk Score": {"main": [[{"node": "Route by band", "type": "main", "index": 0}]]},
+    "Route by band": {"main": [[{"node": "Set status Active in CRM", "type": "main", "index": 0}], [{"node": "Approval task for Category Manager", "type": "main", "index": 0}], [{"node": "Open Compliance Committee case", "type": "main", "index": 0}]]}
+  }
+}

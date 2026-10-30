@@ -1,0 +1,22 @@
+name: ci
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci
+      - run: npm run lint
+      - name: Tests
+        run: |
+          npm test 2>&1 | tee test.txt
+          echo "## Tests" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY; grep -E "^# (tests|pass|fail)" test.txt >> $GITHUB_STEP_SUMMARY; echo '```' >> $GITHUB_STEP_SUMMARY
+      - name: Score sample suppliers
+        run: |
+          echo "## Sample scoring" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          node -e "const {scoreSupplier}=require('./dist/index.js');for(const s of require('./examples/sample_suppliers.json')){const r=scoreSupplier(s);console.log(s.supplierId.padEnd(8),String(r.score).padStart(5),r.band.padEnd(7),r.route)}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
