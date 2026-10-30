@@ -2,6 +2,10 @@
 
 An **n8n community node written in TypeScript**. It scores suppliers for due-diligence risk and returns a 0–100 score, a risk band and an approval route. You drop it into any onboarding workflow (CRM webhook → score → route to auto-approve, Category Manager or Compliance Committee).
 
+![Onboarding workflow](docs/workflow.png)
+
+![Sample scores](docs/sample_scores.png)
+
 The scoring model is the same one as in the [Supplier Compliance RAG Assistant](../supplier-compliance-rag) knowledge base, so the two projects work together.
 
 ## Why a custom node instead of a Code node?
